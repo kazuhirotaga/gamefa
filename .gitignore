@@ -1,0 +1,9 @@
+.DS_Store
+.idea/
+.vscode/
+*.iml
+build/
+.dart_tool/
+node_modules/
+.env
+.gemini/

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Quest - プロトタイプ</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="app-container" id="app">
+            
+            <!-- ホーム画面 -->
+            <div class="screen" id="home-screen">
+                <!-- ヘッダー -->
+                <header class="header">
+                    <div class="player-info">
+                        <div class="avatar">👤</div>
+                        <div class="player-details">
+                            <div class="player-name">山田 太郎</div>
+                            <div class="player-level">Lv.12</div>
+                        </div>
+                    </div>
+                    <div class="header-stats">
+                        <div class="stat-row">
+                            <span class="stat-label">XP</span>
+                            <div class="progress-bar xp-bar">
+                                <div class="progress-fill" style="width: 65%"></div>
+                            </div>
+                            <span class="stat-value">650/1000</span>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- ステータスバー -->
+                <div class="status-bars">
+                    <div class="stat-row">
+                        <span class="stat-icon">❤️</span>
+                        <div class="progress-bar hp-bar">
+                            <div class="progress-fill" style="width: 90%"></div>
+                        </div>
+                        <span class="stat-value">450/500</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-icon">💙</span>
+                        <div class="progress-bar mp-bar">
+                            <div class="progress-fill" style="width: 60%"></div>
+                        </div>
+                        <span class="stat-value">60/100</span>
+                    </div>
+                    <div class="active-buffs">
+                        <span class="buff-icon" title="癒し">💚</span>
+                        <span class="buff-icon" title="元気">⚡</span>
+                    </div>
+                </div>
+
+                <!-- メインコンテンツ -->
+                <div class="content">
+                    <!-- クエストセクション -->
+                    <section class="section">
+                        <h2 class="section-title">📅 今日のクエスト</h2>
+                        <div class="quest-card">
+                            <div class="quest-header">
+                                <span class="quest-icon">🌳</span>
+                                <div class="quest-info">
+                                    <h3 class="quest-title">自然を探せ</h3>
+                                    <p class="quest-desc">植物のカードを3枚作成しよう</p>
+                                </div>
+                            </div>
+                            <div class="quest-progress">
+                                <span class="progress-label">進捗</span>
+                                <div class="progress-bar quest-bar">
+                                    <div class="progress-fill" style="width: 33%"></div>
+                                </div>
+                                <span class="progress-value">1/3</span>
+                            </div>
+                            <div class="quest-rewards">
+                                <span class="reward">💰 50コイン</span>
+                                <span class="reward">⭐ 100XP</span>
+                            </div>
+                        </div>
+
+                        <div class="quest-card">
+                            <div class="quest-header">
+                                <span class="quest-icon">🏃</span>
+                                <div class="quest-info">
+                                    <h3 class="quest-title">アクティブに！</h3>
+                                    <p class="quest-desc">5km以上移動しよう</p>
+                                </div>
+                            </div>
+                            <div class="quest-progress">
+                                <span class="progress-label">進捗</span>
+                                <div class="progress-bar quest-bar">
+                                    <div class="progress-fill" style="width: 24%"></div>
+                                </div>
+                                <span class="progress-value">1.2/5.0 km</span>
+                            </div>
+                            <div class="quest-rewards">
+                                <span class="reward">💰 30コイン</span>
+                                <span class="reward">⭐ 80XP</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 最近のカードセクション -->
+                    <section class="section">
+                        <h2 class="section-title">🆕 最近のカード</h2>
+                        <div class="card-grid">
+                            <div class="mini-card epic" onclick="showCardDetail('sakura')">
+                                <div class="card-image">🌸</div>
+                                <div class="card-name">桜の木</div>
+                                <div class="card-rarity">★★★★☆</div>
+                            </div>
+                            <div class="mini-card rare" onclick="showCardDetail('castle')">
+                                <div class="card-image">🏯</div>
+                                <div class="card-name">城</div>
+                                <div class="card-rarity">★★★☆☆</div>
+                            </div>
+                            <div class="mini-card uncommon" onclick="showCardDetail('deer')">
+                                <div class="card-image">🦌</div>
+                                <div class="card-name">鹿</div>
+                                <div class="card-rarity">★★☆☆☆</div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- おすすめアクション -->
+                    <section class="section">
+                        <h2 class="section-title">🎯 おすすめアクション</h2>
+                        <button class="action-button primary" onclick="showScreen('camera-screen')">
+                            📸 カードを作る
+                        </button>
+                        <button class="action-button secondary" onclick="showScreen('map-screen')">
+                            🗺️ 近くのクエスト
+                        </button>
+                    </section>
+                </div>
+
+                <!-- ボトムナビゲーション -->
+                <nav class="bottom-nav">
+                    <button class="nav-item active" onclick="showScreen('home-screen')">
+                        <span class="nav-icon">🏠</span>
+                        <span class="nav-label">ホーム</span>
+                    </button>
+                    <button class="nav-item" onclick="showScreen('camera-screen')">
+                        <span class="nav-icon">📸</span>
+                        <span class="nav-label">撮影</span>
+                    </button>
+                    <button class="nav-item" onclick="showScreen('quest-screen')">
+                        <span class="nav-icon">🎯</span>
+                        <span class="nav-label">クエスト</span>
+                    </button>
+                    <button class="nav-item" onclick="showScreen('collection-screen')">
+                        <span class="nav-icon">📚</span>
+                        <span class="nav-label">図鑑</span>
+                    </button>
+                    <button class="nav-item" onclick="showScreen('profile-screen')">
+                        <span class="nav-icon">👤</span>
+                        <span class="nav-label">プロフィール</span>
+                    </button>
+                </nav>
+            </div>
+
+            <!-- カード詳細画面（モーダル） -->
+            <div class="modal" id="card-detail-modal">
+                <div class="modal-content">
+                    <button class="close-btn" onclick="closeCardDetail()">×</button>
+                    <div class="card-detail">
+                        <div class="card-image-large">
+                            <span class="card-emoji" id="detail-emoji">🌸</span>
+                        </div>
+                        <h2 class="card-title" id="detail-title">🌸 桜の木</h2>
+                        <div class="card-meta">
+                            <span class="badge success">自然</span>
+                            <span class="rarity epic" id="detail-rarity">★★★★☆ Epic</span>
+                        </div>
+                        
+                        <div class="card-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">⚔️ 攻撃力</span>
+                                <div class="progress-bar attack-bar">
+                                    <div class="progress-fill" style="width: 45%"></div>
+                                </div>
+                                <span class="stat-value">45</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">🛡️ 防御力</span>
+                                <div class="progress-bar defense-bar">
+                                    <div class="progress-fill" style="width: 60%"></div>
+                                </div>
+                                <span class="stat-value">60</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">⚡ 速度</span>
+                                <div class="progress-bar speed-bar">
+                                    <div class="progress-fill" style="width: 30%"></div>
+                                </div>
+                                <span class="stat-value">30</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">🔧 実用性</span>
+                                <div class="progress-bar utility-bar">
+                                    <div class="progress-fill" style="width: 50%"></div>
+                                </div>
+                                <span class="stat-value">50</span>
+                            </div>
+                        </div>
+
+                        <p class="card-description">
+                            春の訪れを告げる美しい桜。その優美な姿は見る者の心を癒す...
+                        </p>
+
+                        <div class="card-metadata">
+                            <div class="meta-item">📅 2025-03-15 取得</div>
+                            <div class="meta-item">📍 上野公園</div>
+                            <div class="meta-item">🏷️ #春 #自然 #ピンク</div>
+                        </div>
+
+                        <div class="card-actions">
+                            <button class="action-button primary">デッキに追加</button>
+                            <button class="action-button secondary">詳細情報</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- バトル画面 -->
+            <div class="screen" id="battle-screen" style="display: none;">
+                <div class="battle-container">
+                    <div class="battle-header">
+                        <span class="turn-counter">ターン 3</span>
+                        <span class="timer">残り 00:45</span>
+                    </div>
+
+                    <div class="enemy-section">
+                        <div class="enemy-sprite">👹</div>
+                        <div class="enemy-info">
+                            <h3 class="enemy-name">ゴブリン戦士</h3>
+                            <div class="stat-row">
+                                <span class="stat-label">HP</span>
+                                <div class="progress-bar enemy-hp-bar">
+                                    <div class="progress-fill" style="width: 60%"></div>
+                                </div>
+                                <span class="stat-value">600/1000</span>
+                            </div>
+                            <div class="status-effects">
+                                <span class="debuff" title="火傷">🔥</span>
+                                <span class="debuff" title="弱体化">💔</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="battle-middle">
+                        <div class="selected-cards">
+                            <div class="battle-card selected">
+                                <span class="card-emoji">🌸</span>
+                                <span class="card-power">ATK 45</span>
+                            </div>
+                            <div class="battle-card selected">
+                                <span class="card-emoji">🏯</span>
+                                <span class="card-power">ATK 70</span>
+                            </div>
+                            <div class="battle-card">
+                                <span class="card-emoji">❓</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="player-section">
+                        <div class="player-stats">
+                            <div class="player-name-level">山田 太郎 Lv.12</div>
+                            <div class="stat-row">
+                                <span class="stat-icon">❤️</span>
+                                <div class="progress-bar hp-bar">
+                                    <div class="progress-fill" style="width: 90%"></div>
+                                </div>
+                                <span class="stat-value">450/500</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-icon">💙</span>
+                                <div class="progress-bar mp-bar">
+                                    <div class="progress-fill" style="width: 60%"></div>
+                                </div>
+                                <span class="stat-value">60/100</span>
+                            </div>
+                            <div class="player-buffs">
+                                <span class="buff-icon">💚</span>
+                                <span class="buff-icon">⚡</span>
+                            </div>
+                        </div>
+
+                        <div class="deck-preview">
+                            <div class="deck-card">🌸</div>
+                            <div class="deck-card">🏯</div>
+                            <div class="deck-card">🦌</div>
+                            <div class="deck-card">🌊</div>
+                            <div class="deck-card">⛩️</div>
+                        </div>
+
+                        <div class="battle-actions">
+                            <button class="battle-btn attack-btn">⚔️ 攻撃</button>
+                            <button class="battle-btn defend-btn">🛡️ 防御</button>
+                            <button class="battle-btn item-btn">💊 道具</button>
+                            <button class="battle-btn deck-btn">🔄 デッキ変更</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="back-button" onclick="showScreen('home-screen')">
+                    ← 戻る
+                </button>
+            </div>
+
+            <!-- 図鑑画面 -->
+            <div class="screen" id="collection-screen" style="display: none;">
+                <header class="screen-header">
+                    <button class="back-button" onclick="showScreen('home-screen')">←</button>
+                    <h1>図鑑</h1>
+                    <button class="search-button">🔍</button>
+                </header>
+
+                <div class="filter-tabs">
+                    <button class="filter-tab active">すべて</button>
+                    <button class="filter-tab">自然</button>
+                    <button class="filter-tab">人工物</button>
+                    <button class="filter-tab">場所</button>
+                    <button class="filter-tab">生き物</button>
+                </div>
+
+                <div class="collection-progress">
+                    <div class="progress-text">達成率: 65% (85/130)</div>
+                    <div class="progress-bar collection-bar">
+                        <div class="progress-fill" style="width: 65%"></div>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <div class="collection-grid">
+                        <div class="collection-card owned epic" onclick="showCardDetail('sakura')">
+                            <div class="card-thumb">🌸</div>
+                            <div class="card-name-small">桜</div>
+                        </div>
+                        <div class="collection-card owned rare" onclick="showCardDetail('castle')">
+                            <div class="card-thumb">🏯</div>
+                            <div class="card-name-small">城</div>
+                        </div>
+                        <div class="collection-card owned uncommon">
+                            <div class="card-thumb">🦌</div>
+                            <div class="card-name-small">鹿</div>
+                        </div>
+                        <div class="collection-card locked">
+                            <div class="card-thumb">❓</div>
+                            <div class="card-name-small">？</div>
+                        </div>
+                        <div class="collection-card owned common">
+                            <div class="card-thumb">🌊</div>
+                            <div class="card-name-small">海</div>
+                        </div>
+                        <div class="collection-card owned uncommon">
+                            <div class="card-thumb">⛩️</div>
+                            <div class="card-name-small">鳥居</div>
+                        </div>
+                        <div class="collection-card locked">
+                            <div class="card-thumb">❓</div>
+                            <div class="card-name-small">？</div>
+                        </div>
+                        <div class="collection-card locked">
+                            <div class="card-thumb">❓</div>
+                            <div class="card-name-small">？</div>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="bottom-nav">
+                    <button class="nav-item" onclick="showScreen('home-screen')">
+                        <span class="nav-icon">🏠</span>
+                        <span class="nav-label">ホーム</span>
+                    </button>
+                    <button class="nav-item" onclick="showScreen('camera-screen')">
+                        <span class="nav-icon">📸</span>
+                        <span class="nav-label">撮影</span>
+                    </button>
+                    <button class="nav-item" onclick="showScreen('quest-screen')">
+                        <span class="nav-icon">🎯</span>
+                        <span class="nav-label">クエスト</span>
+                    </button>
+                    <button class="nav-item active" onclick="showScreen('collection-screen')">
+                        <span class="nav-icon">📚</span>
+                        <span class="nav-label">図鑑</span>
+                    </button>
+                    <button class="nav-item" onclick="showScreen('profile-screen')">
+                        <span class="nav-icon">👤</span>
+                        <span class="nav-label">プロフィール</span>
+                    </button>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

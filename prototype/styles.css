@@ -1,0 +1,877 @@
+/* Real Quest - プロトタイプ CSS */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.phone-frame {
+    width: 375px;
+    height: 812px;
+    background: #000;
+    border-radius: 40px;
+    padding: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.phone-frame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 30px;
+    background: #000;
+    border-radius: 0 0 20px 20px;
+    z-index: 10;
+}
+
+.app-container {
+    width: 100%;
+    height: 100%;
+    background: #f5f5f5;
+    border-radius: 32px;
+    overflow: hidden;
+    position: relative;
+}
+
+.screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* ヘッダー */
+.header {
+    background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+    color: white;
+    padding: 50px 20px 20px;
+}
+
+.player-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.player-details {
+    flex: 1;
+}
+
+.player-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.player-level {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.header-stats {
+    margin-top: 12px;
+}
+
+/* ステータスバー */
+.status-bars {
+    background: white;
+    padding: 16px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stat-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.stat-row:last-child {
+    margin-bottom: 0;
+}
+
+.stat-icon {
+    font-size: 16px;
+    width: 24px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #666;
+    min-width: 30px;
+}
+
+.stat-value {
+    font-size: 12px;
+    color: #666;
+    min-width: 60px;
+    text-align: right;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.xp-bar .progress-fill {
+    background: linear-gradient(90deg, #FFB800 0%, #FFA000 100%);
+}
+
+.hp-bar .progress-fill {
+    background: linear-gradient(90deg, #FF6B6B 0%, #EE5A6F 100%);
+}
+
+.mp-bar .progress-fill {
+    background: linear-gradient(90deg, #4A90E2 0%, #357ABD 100%);
+}
+
+.active-buffs {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+}
+
+.buff-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(74, 144, 226, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: help;
+}
+
+/* コンテンツ */
+.content {
+    flex: 1;
+    padding: 16px;
+    padding-bottom: 80px;
+    overflow-y: auto;
+}
+
+.section {
+    margin-bottom: 24px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* クエストカード */
+.quest-card {
+    background: linear-gradient(135deg, rgba(74, 144, 226, 0.1) 0%, rgba(82, 196, 26, 0.1) 100%);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.quest-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.quest-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+}
+
+.quest-info {
+    flex: 1;
+}
+
+.quest-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+}
+
+.quest-desc {
+    font-size: 13px;
+    color: #666;
+}
+
+.quest-progress {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.progress-label {
+    font-size: 12px;
+    color: #666;
+    min-width: 40px;
+}
+
+.progress-value {
+    font-size: 12px;
+    color: #4A90E2;
+    font-weight: bold;
+    min-width: 50px;
+    text-align: right;
+}
+
+.quest-bar .progress-fill {
+    background: linear-gradient(90deg, #52C41A 0%, #3A9E0D 100%);
+}
+
+.quest-rewards {
+    display: flex;
+    gap: 12px;
+}
+
+.reward {
+    font-size: 13px;
+    color: #666;
+}
+
+/* カードグリッド */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.mini-card {
+    background: white;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mini-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.mini-card.epic {
+    border: 2px solid #9254DE;
+    background: linear-gradient(135deg, #fff 0%, rgba(146, 84, 222, 0.1) 100%);
+}
+
+.mini-card.rare {
+    border: 2px solid #1890FF;
+    background: linear-gradient(135deg, #fff 0%, rgba(24, 144, 255, 0.1) 100%);
+}
+
+.mini-card.uncommon {
+    border: 2px solid #52C41A;
+    background: linear-gradient(135deg, #fff 0%, rgba(82, 196, 26, 0.1) 100%);
+}
+
+.mini-card.common {
+    border: 2px solid #8C8C8C;
+}
+
+.card-image {
+    font-size: 48px;
+    margin-bottom: 8px;
+}
+
+.card-name {
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.card-rarity {
+    font-size: 11px;
+    color: #666;
+}
+
+/* アクションボタン */
+.action-button {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.action-button.primary {
+    background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+    color: white;
+}
+
+.action-button.secondary {
+    background: white;
+    color: #4A90E2;
+    border: 2px solid #4A90E2;
+}
+
+/* ボトムナビゲーション */
+.bottom-nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    padding-bottom: 8px;
+}
+
+.nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    color: #8C8C8C;
+    cursor: pointer;
+    padding: 8px;
+    transition: color 0.2s;
+}
+
+.nav-item:hover {
+    color: #4A90E2;
+}
+
+.nav-item.active {
+    color: #4A90E2;
+}
+
+.nav-icon {
+    font-size: 24px;
+}
+
+.nav-label {
+    font-size: 11px;
+}
+
+/* モーダル（カード詳細） */
+.modal {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    animation: fadeIn 0.3s;
+}
+
+.modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: white;
+    border-radius: 24px;
+    padding: 24px;
+    margin: 20px;
+    max-height: 90%;
+    overflow-y: auto;
+    animation: slideUp 0.3s;
+    position: relative;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(100px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.card-detail {
+    text-align: center;
+}
+
+.card-image-large {
+    width: 200px;
+    height: 267px;
+    margin: 0 auto 16px;
+    background: linear-gradient(135deg, rgba(146, 84, 222, 0.1) 0%, rgba(74, 144, 226, 0.1) 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.card-emoji {
+    font-size: 120px;
+}
+
+.card-title {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.card-meta {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.badge.success {
+    background: rgba(82, 196, 26, 0.2);
+    color: #3A9E0D;
+}
+
+.rarity {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.rarity.epic {
+    background: rgba(146, 84, 222, 0.2);
+    color: #9254DE;
+}
+
+.rarity.rare {
+    background: rgba(24, 144, 255, 0.2);
+    color: #1890FF;
+}
+
+.card-stats {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.attack-bar .progress-fill {
+    background: linear-gradient(90deg, #FF6B6B 0%, #EE5A6F 100%);
+}
+
+.defense-bar .progress-fill {
+    background: linear-gradient(90deg, #4A90E2 0%, #357ABD 100%);
+}
+
+.speed-bar .progress-fill {
+    background: linear-gradient(90deg, #FFB800 0%, #FFA000 100%);
+}
+
+.utility-bar .progress-fill {
+    background: linear-gradient(90deg, #52C41A 0%, #3A9E0D 100%);
+}
+
+.card-description {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    margin: 16px 0;
+    text-align: left;
+}
+
+.card-metadata {
+    text-align: left;
+    margin: 16px 0;
+}
+
+.meta-item {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.card-actions {
+    margin-top: 20px;
+}
+
+/* バトル画面 */
+.battle-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #2C3E50 0%, #34495E 100%);
+    color: white;
+    padding: 20px;
+}
+
+.battle-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.turn-counter, .timer {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.enemy-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.enemy-sprite {
+    font-size: 100px;
+    margin-bottom: 12px;
+}
+
+.enemy-info {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.enemy-name {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.enemy-hp-bar .progress-fill {
+    background: linear-gradient(90deg, #E74C3C 0%, #C0392B 100%);
+}
+
+.status-effects {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.debuff {
+    width: 32px;
+    height: 32px;
+    background: rgba(231, 76, 60, 0.3);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.battle-middle {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.selected-cards {
+    display: flex;
+    gap: 12px;
+}
+
+.battle-card {
+    width: 80px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.battle-card.selected {
+    background: rgba(74, 144, 226, 0.3);
+    border: 2px solid #4A90E2;
+}
+
+.battle-card .card-emoji {
+    font-size: 40px;
+}
+
+.card-power {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.player-section {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.player-stats {
+    margin-bottom: 16px;
+}
+
+.player-name-level {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.player-buffs {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+}
+
+.deck-preview {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    justify-content: center;
+}
+
+.deck-card {
+    width: 50px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+}
+
+.battle-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.battle-btn {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.battle-btn:active {
+    transform: scale(0.95);
+}
+
+.attack-btn {
+    background: linear-gradient(135deg, #E74C3C 0%, #C0392B 100%);
+    color: white;
+}
+
+.defend-btn {
+    background: linear-gradient(135deg, #3498DB 0%, #2980B9 100%);
+    color: white;
+}
+
+.item-btn {
+    background: linear-gradient(135deg, #2ECC71 0%, #27AE60 100%);
+    color: white;
+}
+
+.deck-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* 図鑑画面 */
+.screen-header {
+    background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+    color: white;
+    padding: 50px 20px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.screen-header h1 {
+    font-size: 20px;
+}
+
+.screen-header .back-button,
+.screen-header .search-button {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.filter-tabs {
+    display: flex;
+    gap: 8px;
+    padding: 16px;
+    overflow-x: auto;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filter-tab {
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: #f0f0f0;
+    border: none;
+    font-size: 13px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filter-tab.active {
+    background: #4A90E2;
+    color: white;
+}
+
+.collection-progress {
+    background: white;
+    padding: 16px;
+    margin-bottom: 8px;
+}
+
+.progress-text {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.collection-bar .progress-fill {
+    background: linear-gradient(90deg, #52C41A 0%, #3A9E0D 100%);
+}
+
+.collection-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.collection-card {
+    background: white;
+    border-radius: 8px;
+    padding: 12px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.collection-card:hover {
+    transform: translateY(-4px);
+}
+
+.collection-card.owned {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.collection-card.locked {
+    opacity: 0.3;
+    filter: grayscale(100%);
+}
+
+.card-thumb {
+    font-size: 36px;
+    margin-bottom: 4px;
+}
+
+.card-name-small {
+    font-size: 11px;
+    font-weight: bold;
+}
