@@ -29,7 +29,7 @@ serve(async (req) => {
       )
     }
 
-    const { prompt, referenceImage, cardTemplateId } = body;
+    const { prompt, referenceImage, cardTemplateId, name, rarity, element, stats, special_effect } = body;
 
     if (!prompt) {
       throw new Error('Prompt is required')
@@ -40,7 +40,22 @@ serve(async (req) => {
       throw new Error('GEMINI_API_KEY is not set')
     }
 
-    console.log(`Generating card with prompt: ${prompt.substring(0, 50)}...`);
+    // Construct a rich prompt based on card data
+    let enhancedPrompt = `Generate a high-quality illustration for a trading card game.
+Card Name: ${name || 'Unknown'}
+Rarity: ${rarity || 'Common'}
+Element: ${element || 'Neutral'}
+Stats: Attack ${stats?.attack || 0}, Defense ${stats?.defense || 0}, Speed ${stats?.speed || 0}, Utility ${stats?.utility || 0}
+Special Effect: ${special_effect || 'None'}
+
+Visual Description: ${prompt}
+`;
+
+    if (referenceImage) {
+      enhancedPrompt += `\n\nIMPORTANT: Strictly follow the art style, color palette, and composition of the provided reference image. The generated image MUST look like it belongs to the same set as the reference image.`;
+    }
+
+    console.log(`Generating card with enhanced prompt: ${enhancedPrompt.substring(0, 100)}...`);
     if (referenceImage) {
       console.log(`Reference image provided (length: ${referenceImage.length})`);
     }
@@ -50,7 +65,7 @@ serve(async (req) => {
       contents: [
         {
           parts: [
-            { text: prompt }
+            { text: enhancedPrompt }
           ]
         }
       ]

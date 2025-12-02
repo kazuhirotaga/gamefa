@@ -1,9 +1,4 @@
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
-const SUPABASE_URL = 'https://tmrgsijuvyhzymaogbag.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtcmdzaWp1dnloenltYW9nYmFnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ0MDUzMTYsImV4cCI6MjA3OTk4MTMxNn0.wp0LpAsqux-xk0iIBScd-u3FyFxqWKOT5z8UmboSHiI';
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Replaced by curl check
 
 async function runTest() {
     console.log("--- Starting Supabase Verification ---");
@@ -85,6 +80,22 @@ async function runTest() {
         console.error("❌ Check-in failed:", checkinError);
     } else {
         console.log("✅ Check-in success:", checkinData);
+    }
+
+    // 6. Test card_templates Read
+    console.log("\n6. Testing card_templates Read...");
+    const { data: cards, error: cardsError } = await supabase
+        .from('card_templates')
+        .select('*')
+        .limit(5);
+
+    if (cardsError) {
+        console.error("❌ card_templates Read failed:", cardsError);
+    } else {
+        console.log(`✅ card_templates Read success. Found ${cards.length} cards.`);
+        if (cards.length > 0) {
+            console.log("   Sample card:", cards[0].name);
+        }
     }
 
     console.log("\n--- Verification Complete ---");

@@ -4,80 +4,86 @@ import 'package:real_quest/models/card.dart';
 class SupabaseService {
   final SupabaseClient _client = Supabase.instance.client;
 
-  // Initialize Auth (Auto-login for prototype)
+  Stream<AuthState> get authStateChanges => _client.auth.onAuthStateChange;
+
+  User? get currentUser => _client.auth.currentUser;
+
+  // Initialize Auth - Just check current state, no auto-login
   Future<void> initializeAuth() async {
     print('SupabaseService: initializeAuth started');
-    User? user = _client.auth.currentUser;
+    final user = _client.auth.currentUser;
     print('SupabaseService: Initial currentUser: ${user?.id}');
     
-    if (user == null) {
+    if (user != null) {
+      await _syncUser(user);
+    }
+  }
+
+  Future<void> signIn(String email, String password) async {
+    try {
+      final response = await _client.auth.signInWithPassword(email: email, password: password);
+      if (response.user != null) {
+        await _syncUser(response.user!);
+      }
+    } catch (e) {
+      print('Sign in failed: $e');
+      rethrow;
+    }
+  }
+
+  Future<void> signUp(String email, String password) async {
+    try {
+      // Try to create user via Edge Function to bypass email confirmation
+      print('SupabaseService: Attempting to create user via Edge Function...');
       try {
-        print('SupabaseService: Attempting anonymous sign-in...');
-        // Try Anonymous Sign-in first
-        final response = await _client.auth.signInAnonymously();
-        user = response.user;
-        print('SupabaseService: Anonymous sign-in success: ${user?.id}');
-      } catch (e) {
-        print('SupabaseService: Anonymous login failed: $e');
-        // Fallback to Test User
-        try {
-          print('SupabaseService: Attempting test user login...');
-          const email = 'real.quest.test.user@gmail.com';
-          const password = 'password123';
-          try {
-            final response = await _client.auth.signInWithPassword(email: email, password: password);
-            user = response.user;
-            print('SupabaseService: Password sign-in success: ${user?.id}');
-          } catch (e) {
-             print('SupabaseService: Password sign-in failed: $e');
-             
-             // Try to create user via Edge Function (Admin) to bypass email confirmation
-             try {
-               print('SupabaseService: Calling create-test-user Edge Function...');
-               final functionResponse = await _client.functions.invoke(
-                 'create-test-user',
-                 body: {'email': email, 'password': password},
-               );
-               
-               if (functionResponse.status == 200) {
-                 print('SupabaseService: User created via Edge Function. Logging in...');
-                 final response = await _client.auth.signInWithPassword(email: email, password: password);
-                 user = response.user;
-                 print('SupabaseService: Login success after creation: ${user?.id}');
-               } else {
-                 throw Exception('Function failed: ${functionResponse.status}');
-               }
-             } catch (funcError) {
-                print('SupabaseService: Edge Function creation failed: $funcError');
-                // Fallback to normal sign up (will fail if email confirmation required)
-                final response = await _client.auth.signUp(email: email, password: password);
-                user = response.user;
-                print('SupabaseService: Sign-up success (unconfirmed): ${user?.id}');
-             }
-          }
-        } catch (e) {
-          print('SupabaseService: Test user login failed: $e');
-          throw Exception('Failed to login');
+        final functionResponse = await _client.functions.invoke(
+          'create-test-user',
+          body: {'email': email, 'password': password},
+        );
+
+        if (functionResponse.status != 200) {
+           print('SupabaseService: Edge Function failed with status ${functionResponse.status}');
+           // Fallback to normal sign up if function fails
+           throw Exception('Function failed');
+        }
+        
+        print('SupabaseService: User created via Edge Function. Logging in...');
+        // After creation, log in to get the session
+        await signIn(email, password);
+
+      } catch (funcError) {
+        print('SupabaseService: Edge Function creation failed: $funcError');
+        // Fallback to normal sign up
+        final response = await _client.auth.signUp(email: email, password: password);
+        if (response.user != null) {
+          await _syncUser(response.user!);
+        }
+        // If session is null here, it means email confirmation is required.
+        if (response.session == null) {
+           throw Exception('Please check your email to confirm your account.');
         }
       }
+    } catch (e) {
+      print('Sign up failed: $e');
+      rethrow;
     }
+  }
 
-    if (user != null) {
-      print('SupabaseService: Syncing user to public table...');
-      // Ensure user exists in public.users
-      try {
-        await _client.from('users').upsert({
-          'id': user.id,
-          'display_name': '勇者タナカ', // Default name
-          'email': user.email, // If available
-        });
-        print('SupabaseService: User synced to public table');
-      } catch (e) {
-        print('SupabaseService: Error syncing user to public table: $e');
-        // Ignore if it fails, might already exist or RLS issue (but we need it for FKs)
-      }
-    } else {
-      print('SupabaseService: User is still null after initialization attempt');
+  Future<void> signOut() async {
+    await _client.auth.signOut();
+  }
+
+  Future<void> _syncUser(User user) async {
+    print('SupabaseService: Syncing user to public table...');
+    try {
+      await _client.from('users').upsert({
+        'id': user.id,
+        'display_name': user.userMetadata?['display_name'] ?? '勇者タナカ', // Default name
+        'email': user.email,
+      });
+      print('SupabaseService: User synced to public table');
+    } catch (e) {
+      print('SupabaseService: Error syncing user to public table: $e');
     }
   }
 

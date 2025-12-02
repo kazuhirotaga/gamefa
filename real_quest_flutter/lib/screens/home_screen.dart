@@ -5,6 +5,7 @@ import 'package:real_quest/models/card.dart';
 import 'package:real_quest/models/quest.dart';
 import 'package:real_quest/providers.dart';
 import 'package:real_quest/widgets/card_widget.dart';
+import 'package:real_quest/services/supabase_service.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -26,6 +27,12 @@ class HomeScreen extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
             onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () async {
+              await SupabaseService().signOut();
+            },
           ),
         ],
       ),
